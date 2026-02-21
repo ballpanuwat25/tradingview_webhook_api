@@ -20,6 +20,10 @@ async function sendTelegram(text) {
   });
 }
 
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
+
 app.post("/tv", async (req, res) => {
   const msg = req.body.message || "TradingView Alert";
   await sendTelegram(msg);
