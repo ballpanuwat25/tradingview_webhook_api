@@ -80,6 +80,19 @@ app.post("/telegram-webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
+// เพิ่ม Route นี้ไว้เทสดูจำนวนคน
+app.get("/check-users", async (req, res) => {
+  try {
+      const users = await User.find({});
+      res.json({
+          count: users.length,
+          users: users.map(u => ({ name: u.username, id: u.chatId }))
+      });
+  } catch (err) {
+      res.status(500).send(err.message);
+  }
+});
+
 app.get("/", (req, res) => res.send("Webhook API is Live!"));
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
